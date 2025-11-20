@@ -1,0 +1,75 @@
+name: Release Theme
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Get version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create distribution archive
+        id: archive
+        run: |
+          # Get theme name from package.json (single source of truth)
+          THEME_NAME=$(node -p "require('./package.json').name")
+          ARCHIVE_NAME="${THEME_NAME}.${VERSION}.zip"
+
+          # Create temporary directory for clean theme copy.
+          mkdir -p dist
+
+          # Copy theme files excluding items in .distignore.
+          rsync -av \
+            --exclude-from='.distignore' \
+            --exclude='dist' \
+            ./ "dist/${THEME_NAME}/"
+
+          # Create zip archive.
+          cd dist
+          zip -r "../${ARCHIVE_NAME}" "${THEME_NAME}/"
+          cd ..
+
+          # Output archive name for next steps.
+          echo "archive_name=${ARCHIVE_NAME}" >> $GITHUB_OUTPUT
+          echo "archive_path=${ARCHIVE_NAME}" >> $GITHUB_OUTPUT
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.version.outputs.tag }}
+          body: "Release ${{ steps.version.outputs.tag }}"
+          files: ${{ steps.archive.outputs.archive_path }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

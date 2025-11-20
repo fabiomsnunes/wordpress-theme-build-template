@@ -1,0 +1,19 @@
+{
+    "name": "your-vendor/theme-slug",
+    "description": "Custom WordPress theme",
+    "type": "wordpress-theme",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "yahnis-elsts/plugin-update-checker": "^5.0"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+    },
+    "scripts": {
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf"
+    }
+}

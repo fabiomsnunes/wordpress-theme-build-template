@@ -1,0 +1,18 @@
+/**
+ * Main SCSS entry point.
+ *
+ * This file is compiled by webpack and output to build/css/build.css
+ */
+
+// Example: Import partials here
+// @import 'variables';
+// @import 'mixins';
+// @import 'base';
+// @import 'components/header';
+// @import 'components/footer';
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+}

@@ -1,0 +1,33 @@
+{
+    "name": "theme-slug",
+    "version": "1.0.0",
+    "description": "Custom WordPress theme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/your-username/theme-slug.git"
+    },
+    "author": "Your Name",
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "start": "wp-scripts start",
+        "build": "wp-scripts build",
+        "lint:js": "wp-scripts lint-js",
+        "lint:css": "wp-scripts lint-style",
+        "lint:pkg-json": "wp-scripts lint-pkg-json",
+        "test": "wp-scripts test-unit-js",
+        "release": "standard-version",
+        "release:minor": "standard-version --release-as minor",
+        "release:major": "standard-version --release-as major",
+        "release:patch": "standard-version --release-as patch",
+        "release:undo": "git reset --soft HEAD~1 && git tag -d $(git describe --tags --abbrev=0)"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^19.2.4",
+        "mini-css-extract-plugin": "^2.9.2",
+        "standard-version": "^9.5.0",
+        "webpack-remove-empty-scripts": "^1.0.4"
+    },
+    "dependencies": {
+    }
+}

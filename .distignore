@@ -1,0 +1,61 @@
+# WordPress Theme Distribution Ignore
+# Files and directories to EXCLUDE from distribution archive
+
+# Development directories
+/.git
+/.github
+/node_modules
+/src
+/releases
+
+# IMPORTANT: vendor/ is NOT excluded
+# Composer dependencies (like GitHub Updater) are needed in production
+
+# Build config and package files
+package.json
+package-lock.json
+composer.json
+composer.lock
+webpack.config.js
+.versionrc
+.versionrc.updater.js
+CHANGELOG.md
+
+# Version control
+.gitignore
+.gitattributes
+.distignore
+
+# Documentation
+*.md
+README.md
+
+# PHP CodeSniffer
+.phpcs.xml
+.phpcs.xml.dist
+phpcs.xml
+phpcs.xml.dist
+phpunit.xml
+phpunit.xml.dist
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.env
+.editorconfig
+
+# Logs and caches
+*.log
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IMPORTANT: build/ directory is NOT excluded here
+# It must be included in the final .zip distribution
+# But it IS excluded from git (see .gitignore)
